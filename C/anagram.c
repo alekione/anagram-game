@@ -1,8 +1,20 @@
+/**
+ * This is anagram console game application.
+ * It is mainly for educational or entertainment only.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
+/**
+ *
+ * create_word - used for creating word for user guessing
+ * @word: correct word used for creating user guess word
+ * @level: user/current game level
+ * Return: word for user to guess
+ */
 char *create_word(char *word, int level)
 {
 	char *ret = strdup(word);
