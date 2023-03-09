@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <errno.h>
 
 /**
  *
@@ -54,8 +57,37 @@ char *create_word(char *word, int level)
 
 int main()
 {
-	char *word = "sleepy";
-	int level = 3;
-	printf("%s\n",create_word(word, level));
+	FILE *file;
+	int level, i;
+	char *words[100];
+
+	if (access("words.txt", R_OK) != 0)
+	{
+		perror("words.txt");
+		exit(errno);
+	}
+
+	file = fopen("words.txt", "r");
+	if (file == NULL)
+	{
+		perror("open");
+		exit(1);
+	}
+	fseek(file, 0, SEEK_END);
+	if (ftell(file) == 0)
+	{
+		printf("File is empty\n");
+		fclose(file);
+		exit(1);
+	}
+	fseek(file, 0, SEEK_SET);
+	while (true)
+	{
+		printf("Please select your prefered level\n1 - easy\n2 - medium\n3 - hard\n");
+		scanf("%d", &level);
+		if (level == 1 || level == 2 || level == 3)
+				break;
+		printf("Invalid argument\n\n");
+	}
 	return 0;
 }
